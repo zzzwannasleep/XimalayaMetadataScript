@@ -12,15 +12,28 @@
 
 ## 文件
 
-- [ximalaya-metadata.user.js](./ximalaya-metadata.user.js)
+- 源码：[ximalaya-metadata.user.js](./ximalaya-metadata.user.js)
+- 自动构建产物：`dist/ximalaya-metadata.user.js`
+
+## 安装
+
+通过下面的一键安装链接安装，Tampermonkey / Violentmonkey 才能按脚本头里的 `@downloadURL` 和 `@updateURL` 自动检查更新。
+
+<!-- userscript-links:start -->
+- [一键安装脚本](https://raw.githubusercontent.com/zzzwannasleep/XimalayaMetadataScript/main/dist/ximalaya-metadata.user.js)
+- [自动更新元数据](https://raw.githubusercontent.com/zzzwannasleep/XimalayaMetadataScript/main/dist/ximalaya-metadata.meta.js)
+- [查看源码](https://github.com/zzzwannasleep/XimalayaMetadataScript/blob/main/ximalaya-metadata.user.js)
+<!-- userscript-links:end -->
 
 ## 使用方式
 
 1. 安装 Tampermonkey 或 Violentmonkey
-2. 新建脚本，把 [ximalaya-metadata.user.js](./ximalaya-metadata.user.js) 内容粘进去保存
+2. 点击上面的“一键安装脚本”链接完成安装
 3. 打开喜马拉雅专辑页，例如 `https://www.ximalaya.com/album/40121646`
 4. 点击右下角的 `导出 metadata.json`
 5. 检查弹窗里的作者、演播、系列等字段，确认后下载
+
+如果你是手工复制源码新建脚本，也能用，但不会自动跟随仓库更新。
 
 ## 当前抓取逻辑
 
@@ -53,6 +66,15 @@
 - 喜马拉雅没有稳定公开的“作者 / 出版社 / 系列”结构化字段，当前版本是“自动推断 + 手工确认”
 - `publishedYear` 目前默认取专辑在喜马拉雅的创建年份，不一定等于原书出版年份
 - 简介优先使用搜索接口返回内容，部分专辑可能仍带有平台宣传语，需要你在导出前手改一下
+
+## 自动化
+
+- 工作流文件：`.github/workflows/build-userscript.yml`
+- 本地手动生成：`node tools/sync-userscript-release.mjs --repo zzzwannasleep/XimalayaMetadataScript --branch main`
+- 自动生成内容：
+  - `dist/ximalaya-metadata.user.js`
+  - `dist/ximalaya-metadata.meta.js`
+  - README 里的安装 / 更新链接
 
 ## 参考
 

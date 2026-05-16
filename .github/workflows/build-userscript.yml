@@ -1,0 +1,50 @@
+name: Build Userscript
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ximalaya-metadata.user.js"
+      - "README.md"
+      - "tools/**"
+      - ".github/workflows/build-userscript.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync dist and README
+        run: node tools/sync-userscript-release.mjs --repo "$GITHUB_REPOSITORY" --branch "$GITHUB_REF_NAME"
+
+      - name: Validate generated userscript
+        run: node --check dist/ximalaya-metadata.user.js
+
+      - name: Commit generated files
+        run: |
+          if git diff --quiet -- README.md dist/ximalaya-metadata.user.js dist/ximalaya-metadata.meta.js; then
+            echo "No generated changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md dist/ximalaya-metadata.user.js dist/ximalaya-metadata.meta.js
+          git commit -m "chore: refresh userscript artifacts"
+          git push
