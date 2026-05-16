@@ -3,7 +3,7 @@
 // @description  为喜马拉雅专辑页生成可编辑的 metadata.json
 // @author       Codex
 // @namespace    https://github.com/zzzwannasleep/XimalayaMetadataScript
-// @version      0.1.0.1
+// @version      0.1.0.2
 // @homepageURL  https://github.com/zzzwannasleep/XimalayaMetadataScript
 // @supportURL   https://github.com/zzzwannasleep/XimalayaMetadataScript/issues
 // @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/XimalayaMetadataScript/main/dist/ximalaya-metadata.user.js
